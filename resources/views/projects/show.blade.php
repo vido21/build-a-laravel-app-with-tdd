@@ -29,10 +29,26 @@
                     <h2 style="color: grey"  class="text-lg font-normal mb-3">Tasks</h2>
                     
                         {{-- tastk --}}
-                        <div class="rounded shadow p-5 mb-3" style="background-color: white">Lorem ipsum</div>
-                        <div class="rounded shadow p-5 mb-3" style="background-color: white">Lorem ipsum</div>
-                        <div class="rounded shadow p-5 mb-3" style="background-color: white">Lorem ipsum</div>
-                        <div class="rounded shadow p-5" style="background-color: white">Lorem ipsum</div>
+                        @foreach ($project->tasks as $task)
+                            <div class="rounded shadow p-5 mb-3" style="background-color: white">
+                                <form action="{{$task->path()}}" method="POST" >
+                                    @method('PATCH')
+                                    @csrf
+
+                                    <div class="flex">
+                                        <input name="body" type="text" value="{{ $task->body}}" class="w-full" style="color: {{$task->completed ? 'grey' : '' }}"  >
+                                        <input name="completed" type="checkbox" onchange="this.form.submit()" {{$task->completed ? 'checked' : '' }}>                                        
+                                    </div>
+                                </form>
+                            </div>
+                        @endforeach
+
+                            <div class="rounded shadow p-5 mb-3" style="background-color: white">
+                                <form action="{{$project->path() .'/tasks' }}" method="post">
+                                    @csrf
+                                    <input type="text" placeholder="Add a new task ...." class="w-full" name="body" >   
+                                </form>
+                            </div>
                 </div>
 
                 <div>
