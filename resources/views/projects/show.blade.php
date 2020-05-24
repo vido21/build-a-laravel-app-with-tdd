@@ -73,6 +73,8 @@
                         >Save</button>
                     </form>
 
+                    @include('errors')
+
                 </div>
 
             </div>
