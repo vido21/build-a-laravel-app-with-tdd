@@ -23,10 +23,8 @@ class ProjectsController extends Controller
         $attributes = request()->validate([
             'title' => 'required',
             'description' => 'required',
+            'notes' => 'min:3'
         ]);
-        // $attributes['owner_id'] = auth()->id();
-
-        // Project::create($attributes);
 
         $project = auth()->user()->projects()->create($attributes);
 
@@ -40,5 +38,14 @@ class ProjectsController extends Controller
         }
 
         return view('projects.show', compact('project'));
+    }
+
+    public function update(Project $project)
+    {
+        $project->update([
+            'notes' => request('notes')
+        ]);
+
+        return redirect($project->path());
     }
 }
