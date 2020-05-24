@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateProjectRequest;
 use App\Project;
 
 class ProjectsController extends Controller
@@ -43,9 +42,11 @@ class ProjectsController extends Controller
         return view('projects.edit', compact('project'));
     }
 
-    public function update(UpdateProjectRequest $form)
+    public function update(Project $project)
     {
-        return redirect($form->save()->path());
+        $project->update($this->validateRequest());
+
+        return redirect($project->path());
     }
 
     /**
