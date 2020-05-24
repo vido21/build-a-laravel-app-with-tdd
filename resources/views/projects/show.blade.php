@@ -14,10 +14,10 @@
                     color : white;
                     box-shadow : 0 2px 7px 0 #b0eaff;
                     " 
-                href="/projects/create"
+                href="{{$project->path().'/edit'}}"
                 class="rounded-lg text-sm py-2 px-5"
             >
-                New Project
+                Edit Project
             </a>
         </div>
     </header>
