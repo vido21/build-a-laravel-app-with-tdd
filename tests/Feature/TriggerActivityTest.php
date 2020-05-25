@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Facades\Tests\Setup\ProjectFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use App\Task;
 
 class RecordActivityTest extends TestCase
 {
@@ -35,25 +36,35 @@ class RecordActivityTest extends TestCase
         $project = ProjectFactory::create();
 
         $project->addTask('Some task');
+
         $this->assertCount(2, $project->activity);
-        $this->assertEquals('created_task', $project->activity->last()->description);
+
+        tap($project->activity->last(), function ($activity) {
+            $this->assertEquals('created_task', $activity->description);
+            $this->assertInstanceOf(Task::class, $activity->subject);
+            $this->assertEquals('Some task', $activity->subject->body);
+        });
     }
 
     /** @test */
     public function completing_a_new_taks()
     {
         $this->withoutExceptionHandling();
+
         $project = ProjectFactory::withTasks(1)->create();
 
         $this->actingAs($project->owner)->patch($project->tasks[0]->path(), [
             'body' => 'foobar',
             'completed' => true
         ]);
-        // dd($project->activity);
-        // $project->addTask('Some task');
-        // dd($project->activity);
+
         $this->assertCount(3, $project->activity);
-        $this->assertEquals('completed_task', $project->activity->last()->description);
+        // dd($project->activity->last());
+        tap($project->activity->last(), function ($activity) {
+            $this->assertEquals('completed_task', $activity->description);
+            $this->assertInstanceOf(Task::class, $activity->subject);
+            $this->assertEquals('foobar', $activity->subject->body);
+        });
     }
 
     /** @test */
