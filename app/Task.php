@@ -9,6 +9,9 @@ class Task extends Model
     protected $guarded = [];
 
     protected $touches = ['project'];
+    protected $casts = [
+        'completed' => 'boolean'
+    ];
 
     /**
      * Boot the model.
@@ -37,5 +40,12 @@ class Task extends Model
         $this->update(['completed' => true]);
 
         $this->project->recordActivity('completed_task');
+    }
+
+    public function incomplete()
+    {
+        $this->update(['completed' => false]);
+
+        $this->project->recordActivity('incompleted_task');
     }
 }
