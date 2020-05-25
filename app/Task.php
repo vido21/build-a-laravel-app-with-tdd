@@ -16,15 +16,6 @@ class Task extends Model
     /**
      * Boot the model.
      */
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::created(function ($task) {
-            $task->project->recordActivity('created_task');
-        });
-    }
-
     public function path()
     {
         return "/projects/{$this->project->id}/tasks/{$this->id}";
