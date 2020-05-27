@@ -8,17 +8,29 @@
                 <a href="/projects" style="color: grey"  class="text-sm font-normal">My Projects</a>   / {{$project->title}}
             </p>
 
-            <a 
-                style="background-color : blue ;
-                    text-decoration:none; 
-                    color : white;
-                    box-shadow : 0 2px 7px 0 #b0eaff;
-                    " 
-                href="{{$project->path().'/edit'}}"
-                class="rounded-lg text-sm py-2 px-5"
-            >
-                Edit Project
-            </a>
+            <div class="flex items-center">
+                @foreach ($project->members as $member)
+                    <img
+                        src="{{ gravatar_url($member->email) }}"
+                        alt="{{ $member->name }}'s avatar"
+                        class="rounded-full w-8 mr-2">
+                @endforeach
+
+                <img
+                    src="{{ gravatar_url($project->owner->email) }}"
+                    alt="{{ $project->owner->name }}'s avatar"
+                    class="rounded-full w-8 mr-2">
+
+                <a
+                    href="{{ $project->path().'/edit' }}" 
+                    style="background-color : blue ;
+                        text-decoration:none; 
+                        color : white;
+                        box-shadow : 0 2px 7px 0 #b0eaff;
+                        " 
+                    class="rounded-lg text-sm py-2 px-5 ml-4"
+                 >Edit Project</a>
+            </div>
         </div>
     </header>
 
