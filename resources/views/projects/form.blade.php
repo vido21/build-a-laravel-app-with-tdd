@@ -8,7 +8,7 @@
                 type="text"
                 class="input bg-transparent border border-grey-light rounded p-2 text-xs w-full"
                 name="title"
-                placeholder="My next awesome project"
+                placeholder="Project title"
                 required
                 value="{{ $project->title }}">
     </div>
@@ -22,7 +22,7 @@
                 name="description"
                 rows="10"
                 class="textarea bg-transparent border border-grey-light rounded p-2 text-xs w-full"
-                placeholder="I should start learning piano."
+                placeholder="Description"
                 required>{{ $project->description }}</textarea>
     </div>
 </div>
