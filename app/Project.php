@@ -20,6 +20,11 @@ class Project extends Model
         return $this->belongsTo('App\User', 'owner_id');
     }
 
+    public function addTasks($tasks)
+    {
+        return $this->tasks()->createMany($tasks);
+    }
+
     public function addTask($body)
     {
         return $this->tasks()->create(compact('body'));
